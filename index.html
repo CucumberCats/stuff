@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cucumber</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at 50% -20%, #20232a 0, #101114 42%, #090a0c 100%);
+            color: #e8e8e8;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .top {
+            width: min(1050px, calc(100% - 32px));
+            margin: 0 auto;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .nav {
+            display: flex;
+            gap: 22px;
+            color: #8d9098;
+            font-size: 14px;
+        }
+
+        .nav a {
+            transition: color .2s ease;
+        }
+
+        .nav a:hover {
+            color: #fff;
+        }
+
+        .window {
+            width: min(1050px, calc(100% - 32px));
+            margin: 20px auto 60px;
+            overflow: hidden;
+            border: 1px solid #303238;
+            border-radius: 13px;
+            background: rgba(17, 18, 21, .92);
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, .45),
+                0 0 0 1px rgba(255,255,255,.02);
+        }
+
+        .window-bar {
+            height: 43px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            border-bottom: 1px solid #2a2b2f;
+            background: #17181b;
+        }
+
+        .dots {
+            position: absolute;
+            left: 14px;
+            display: flex;
+            gap: 7px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .red {
+            background: #ff5f57;
+        }
+
+        .yellow {
+            background: #febc2e;
+        }
+
+        .green {
+            background: #28c840;
+        }
+
+        .window-title {
+            color: #9b9da4;
+            font-size: 13px;
+        }
+
+        .content {
+            padding: 64px;
+        }
+
+        .hero {
+            max-width: 700px;
+        }
+
+        .hero h1 {
+            margin: 0 0 16px;
+            font-size: clamp(38px, 6vw, 64px);
+            line-height: 1;
+            letter-spacing: -3px;
+            color: #fff;
+        }
+
+        .hero p {
+            margin: 0;
+            color: #a8abb3;
+            font-size: 17px;
+            line-height: 1.7;
+        }
+
+        .divider {
+            height: 1px;
+            background: #2b2d31;
+            margin: 58px 0;
+        }
+
+        .section-title {
+            margin: 0 0 20px;
+            color: #fff;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .card {
+            min-height: 145px;
+            padding: 24px;
+            border: 1px solid #292b30;
+            border-radius: 10px;
+            background: #141519;
+            transition:
+                transform .2s ease,
+                border-color .2s ease,
+                background .2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            border-color: #3a3c42;
+            background: #18191d;
+        }
+
+        .card h3 {
+            margin: 0 0 10px;
+            color: #eee;
+            font-size: 16px;
+        }
+
+        .card p {
+            margin: 0;
+            color: #8f929a;
+            font-size: 14px;
+            line-height: 1.65;
+        }
+
+        .cloudflare {
+            padding: 28px;
+            border: 1px solid #292b30;
+            border-radius: 10px;
+            background: #141519;
+        }
+
+        .cloudflare p {
+            margin: 0;
+            color: #999ca4;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        .kitty-row {
+            margin-top: 24px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .kitty-text {
+            color: #fff;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .cat-gif {
+            width: 76px;
+            height: 76px;
+            object-fit: contain;
+            image-rendering: pixelated;
+        }
+
+        .contact {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+            padding: 28px;
+            border: 1px solid #292b30;
+            border-radius: 10px;
+            background: #141519;
+        }
+
+        .contact p {
+            margin: 0;
+            color: #999ca4;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .discord {
+            flex-shrink: 0;
+            padding: 10px 16px;
+            border: 1px solid #36383e;
+            border-radius: 8px;
+            color: #fff;
+            background: #1b1c20;
+            font-size: 14px;
+            transition:
+                background .2s ease,
+                border-color .2s ease;
+        }
+
+        .discord:hover {
+            background: #22242a;
+            border-color: #4a4c53;
+        }
+
+        @media (max-width: 700px) {
+            .top {
+                height: 64px;
+            }
+
+            .nav {
+                gap: 12px;
+            }
+
+            .content {
+                padding: 34px 24px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .contact {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .hero h1 {
+                letter-spacing: -2px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="top">
+        <nav class="nav">
+            <a href="#about">about</a>
+            <a href="#stuff">stuff</a>
+            <a href="#contact">contact</a>
+        </nav>
+    </header>
+
+    <main class="window">
+
+        <div class="window-bar">
+            <div class="dots">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+            </div>
+
+            <div class="window-title">home</div>
+        </div>
+
+        <div class="content">
+
+            <section class="hero" id="about">
+                <h1>Hi im cucumber</h1>
+
+                <p>
+                    I work on Roblox revivals and other stuff. Most of what I do is
+                    around old Roblox clients and the source code that comes with them.
+                    I work on getting the old code running again and fixing things that
+                    no longer work.
+                </p>
+            </section>
+
+            <div class="divider"></div>
+
+            <section id="stuff">
+                <h2 class="section-title">stuff I work on</h2>
+
+                <div class="cards">
+
+                    <div class="card">
+                        <h3>RCCService</h3>
+                        <p>
+                            Getting old RCCService versions working and fixing the
+                            stuff around rendering and asset loading.
+                        </p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Rendering</h3>
+                        <p>
+                            Working on avatars, thumbnails and getting old assets
+                            to actually render properly.
+                        </p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Websites</h3>
+                        <p>
+                            I work on the old Roblox website source and fix things
+                            when they break.
+                        </p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Revival setup</h3>
+                        <p>
+                            I work on setting up revivals and getting the different
+                            parts working together.
+                        </p>
+                    </div>
+
+                </div>
+            </section>
+
+            <div class="divider"></div>
+
+            <section class="cloudflare">
+                <h2 class="section-title">Cloudflare</h2>
+
+                <p>
+                    I use Cloudflare a lot. The tunnels are really helpful for
+                    revivals since I can get things online without messing with
+                    port forwarding.
+                </p>
+
+                <div class="kitty-row">
+                    <div class="kitty-text">Cloudflare is my kitty cat :3</div>
+                    <img class="cat-gif" src="cat.gif" alt="pixel cat">
+                </div>
+            </section>
+
+            <div class="divider"></div>
+
+            <section id="contact">
+                <h2 class="section-title">contact</h2>
+
+                <div class="contact">
+                    <p>
+                        I can help you with setting up ur own revival.
+                        You can always contact me if you need help with something.
+                    </p>
+
+                    <a class="discord" href="https://discord.com" target="_blank">
+                        Discord: swj2
+                    </a>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+</body>
+</html>
